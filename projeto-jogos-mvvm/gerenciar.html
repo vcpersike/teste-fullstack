@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Jogos</title>
+  <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script type="module">
+    import { renderizarHeader } from './components/header.js';
+    import { renderizarFooter } from './components/footer.js';
+
+    renderizarHeader();
+    renderizarFooter();
+  </script>
+
+  <main>
+    <div class="container">
+      <h1 class="text-center my-4">Lista de Jogos</h1>
+      <form id="form-jogo" class="mt-4">
+        <div class="form-group">
+          <input type="text" id="nome-jogo" class="form-control" placeholder="Nome do Jogo" required>
+        </div>
+        <div class="form-group">
+          <input type="text" id="imagem-jogo" class="form-control" placeholder="URL da Imagem" required>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Jogo</button>
+      </form>
+
+      <div id="gerenciar-lista" class="row mt-4"></div>
+    </div>    
+  </main>
+
+  <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="module">
+    import { renderizarGerenciamento, adicionarEventoAdicionarJogo } from './views/jogoView.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarGerenciamento();
+      adicionarEventoAdicionarJogo();
+    });
+  </script>
+</body>
+</html>
