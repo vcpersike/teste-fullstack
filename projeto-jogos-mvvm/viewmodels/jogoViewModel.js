@@ -9,8 +9,8 @@ class JogoViewModel {
     return this.model.getJogos();
   }
 
-  adicionarJogo(nome) {
-    this.model.adicionarJogo(nome);
+  adicionarJogo(nome, imagem) {
+    this.model.adicionarJogo(nome, imagem);
   }
 
   editarJogo(index, novoNome) {

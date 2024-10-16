@@ -1,23 +1,25 @@
 export function criarCard(jogo) {
-    const card = document.createElement('div');
-    card.className = 'col-md-4';
-  
-    card.innerHTML = `
-      <div class="card">
-        <img src="${jogo.imagem}" class="card-img-top" alt="${jogo.nome}">
-        <div class="card-body text-center">
-          <h5 class="card-title">${jogo.nome}</h5>
-        </div>
+  const imagemSrc = jogo.imagem || 'https://via.placeholder.com/150';
+
+  const card = document.createElement('div');
+  card.className = 'col-md-4';
+
+  card.innerHTML = `
+    <div class="card">
+      <img src="${imagemSrc}" class="card-img-top" alt="${jogo.nome}">
+      <div class="card-body text-center">
+        <h5 class="card-title">${jogo.nome}</h5>
       </div>
-    `;
-  
-    return card;
+    </div>
+  `;
+
+  return card;
   }
-  
+
   export function criarCardComBotoes(jogo, index) {
     const card = document.createElement('div');
     card.className = 'col-md-4';
-  
+
     card.innerHTML = `
       <div class="card">
         <img src="${jogo.imagem}" class="card-img-top" alt="${jogo.nome}">
@@ -30,7 +32,6 @@ export function criarCard(jogo) {
         </div>
       </div>
     `;
-  
+
     return card;
   }
-  

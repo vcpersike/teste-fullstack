@@ -46,21 +46,23 @@ export function renderizarLogs() {
 
 export function adicionarEventoAdicionarJogo() {
   const form = document.getElementById('form-jogo');
-  if (!form) {
-    console.error('Formulário não encontrado.');
-    return;
-  }
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nomeJogo = document.getElementById('nome-jogo').value;
-    const imagemJogo = document.getElementById('imagem-jogo').value;
+
+    const nomeJogo = document.getElementById('nome-jogo').value.trim();
+    const imagemJogo = document.getElementById('imagem-jogo').value.trim();
+
+    if (!nomeJogo || !imagemJogo) {
+      alert('Por favor, preencha todos os campos corretamente.');
+      return;
+    }
 
     viewModel.adicionarJogo(nomeJogo, imagemJogo);
     renderizarGerenciamento();
     form.reset();
   });
-}
+};
 
 window.editarJogo = (index) => {
   const novoNome = prompt('Digite o novo nome do jogo:');

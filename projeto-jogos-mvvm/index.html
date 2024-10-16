@@ -20,8 +20,9 @@
     <div class="container">
       <h1 class="text-center my-4">Lista de Jogos</h1>
       <div id="jogos-lista" class="row"></div>
-    </div>    
+    </div>
   </main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script type="module">
     import { renderizarLista } from './views/jogoView.js';
@@ -29,8 +30,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderizarLista();
     });
-    
-    
+
   </script>
 </body>
 </html>
