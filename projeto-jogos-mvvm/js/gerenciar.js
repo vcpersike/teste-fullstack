@@ -1,6 +1,7 @@
 import { renderizarTabela } from '../views/jogoView.js'; 
 import { criarJogo } from '../services/apiService.js';
 import JogoViewModel from '../viewmodels/jogoViewModel.js'; 
+import { criarModalEdicao } from '../components/modalEditarJogo.js';
 
 const listaElement = document.getElementById('gerenciar-lista');
 const viewModel = new JogoViewModel(); 
@@ -57,12 +58,42 @@ function inicializarValidacao() {
   });
 }
 
+criarModalEdicao(async (jogoEditado) => {
+  try {
+    const id = document.getElementById('editar-id').value;
+    await viewModel.editarJogo(id, jogoEditado); // Passa o ID corretamente
+    const jogos = await viewModel.carregarJogos();
+    renderizarTabela(jogos, listaElement, onEdit, onDelete);
+    $('#modal-editar').modal('hide'); // Fecha o modal
+  } catch (error) {
+    console.error('Erro ao salvar o jogo:', error);
+    alert('Erro ao salvar o jogo.');
+  }
+});
+
 function onEdit(jogo) {
-  console.log('Editar:', jogo);
+  // Preenche o modal com os dados do jogo
+  document.getElementById('editar-id').value = jogo.id;
+  document.getElementById('editar-nome').value = jogo.nome;
+  document.getElementById('editar-descricao').value = jogo.descricao;
+  document.getElementById('editar-produtora').value = jogo.produtora;
+  document.getElementById('editar-ano').value = jogo.ano;
+  document.getElementById('editar-idade-minima').value = jogo.idadeMinima;
+
+  // Abre o modal de edição
+  $('#modal-editar').modal('show');
 }
 
-function onDelete(jogoId) {
-  console.log('Excluir:', jogoId);
+async function onDelete(jogoId) {
+  try {
+    await viewModel.removerJogo(jogoId);
+    const jogos = await viewModel.carregarJogos();
+    renderizarTabela(jogos, listaElement, onEdit, onDelete);
+    alert('Jogo excluído com sucesso!');
+  } catch (error) {
+    console.error('Erro ao excluir o jogo:', error);
+    alert('Erro ao excluir o jogo.');
+  }
 }
 
 
