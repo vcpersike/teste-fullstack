@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerenciar Jogos</title>
   <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
-  
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -29,13 +28,11 @@
           <input type="text" id="nome-jogo" name="nome" class="form-control" placeholder="Nome do Jogo" required>
         </div>
       
-        <!-- Campo de Descrição com largura maior -->
         <div class="form-group">
           <label for="descricao-jogo">Descrição</label>
           <input type="text" id="descricao-jogo" name="descricao" class="form-control" placeholder="Descrição" required>
         </div>
       
-        <!-- Linha para os campos Produtora, Ano e Idade Mínima -->
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="produtora-jogo">Produtora</label>
@@ -66,11 +63,6 @@
   <script src="./vendor/jquery-validation-1.19.5/dist/jquery.validate.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="./js/gerenciar.js"></script>
-  <script>
-    // Verifique se o jQuery Validation foi carregado corretamente
-    console.log('jQuery:', $);
-    console.log('jQuery Validation:', $.fn.validate);
-  </script>
 </body>
 
 </html>

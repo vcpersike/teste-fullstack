@@ -1,31 +1,36 @@
 import { carregarJogos } from '../utils/carregarJogos.js';
 import { criarJogo } from '../services/apiService.js';
+import { criarTabelaJogos } from '../components/tabelaJogo.js';
 
 const listaElement = document.getElementById('gerenciar-lista');
-const formJogo = $('#form-jogo'); // jQuery selector
-
-// Verifique se a função validate está disponível
-console.log('jQuery:', $);
-console.log('jQuery Validation:', $.fn.validate);
-
-/**
- * Inicializa a validação do formulário
- */
+const formJogo = $('#form-jogo');
 function inicializarValidacao() {
+  const hoje = new Date();
+  const minAno = new Date(hoje.getFullYear() - 70, hoje.getMonth(), hoje.getDate()); 
+  const maxAno = new Date(hoje.getFullYear() + 3, hoje.getMonth(), hoje.getDate());
   formJogo.validate({
     rules: {
       nome: { required: true, minlength: 3 },
       descricao: { required: true, minlength: 5 },
       produtora: { required: true },
-      ano: { required: true, dateISO: true },
-      idadeMinima: { required: true, number: true, min: 0 },
+      ano: {
+        required: true,
+        dateISO: true,
+        min: minAno.toISOString().split('T')[0], 
+        max: maxAno.toISOString().split('T')[0], 
+      },      idadeMinima: { required: true, number: true, min: 12 },
     },
     messages: {
       nome: { required: 'O nome é obrigatório', minlength: 'Mínimo 3 caracteres' },
       descricao: { required: 'A descrição é obrigatória', minlength: 'Mínimo 5 caracteres' },
       produtora: 'A produtora é obrigatória',
-      ano: { required: 'O ano é obrigatório', dateISO: 'Formato: AAAA-MM-DD' },
-      idadeMinima: { required: 'A idade mínima é obrigatória', number: 'Digite um número válido', min: 'Mínimo 0' },
+      ano: {
+        required: 'A data de lançamento é obrigatória',
+        dateISO: 'Formato: AAAA-MM-DD',
+        min: `A data deve ser a partir de ${minAno.toISOString().split('T')[0]}`,
+        max: `A data não pode ser superior a ${maxAno.toISOString().split('T')[0]}`,
+      },
+      idadeMinima: { required: 'A idade mínima é obrigatória', number: 'Digite um número válido', min: 'Mínimo 12' },
     },
     submitHandler: async function () {
       try {
@@ -36,7 +41,6 @@ function inicializarValidacao() {
           ano: $('#ano-jogo').val(),
           idadeMinima: parseInt($('#idade-minima-jogo').val(), 10),
         };
-        console.log('Novo jogo:', novoJogo);
         await criarJogo(novoJogo);
         await carregarJogos(listaElement);
         formJogo[0].reset();
@@ -48,10 +52,23 @@ function inicializarValidacao() {
   });
 }
 
+function onEdit(jogo) {
+  console.log('Editar:', jogo);
+}
+
+function onDelete(jogoId) {
+  console.log('Excluir:', jogoId);
+}
+
+function renderizarTabela(jogos, element) {
+  const tabela = criarTabelaJogos(jogos, onEdit, onDelete);
+  element.appendChild(tabela);
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+  inicializarValidacao();
   try {
-    await carregarJogos(listaElement);
-    inicializarValidacao();
+    await carregarJogos(listaElement, renderizarTabela);
   } catch (error) {
     console.error('Erro ao carregar os jogos:', error);
   }
