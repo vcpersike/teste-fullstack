@@ -14,10 +14,9 @@ export default class JogoViewModel {
     }
   }
 
-  async adicionarJogo(jogo, imagem) {
+  async adicionarJogo(jogo) {
     try {
-      await this.model.adicionarJogo(jogo, imagem);
-      console.log(`Jogo "${jogo.nome}" adicionado com sucesso.`);
+      await this.model.adicionarJogo(jogo);
     } catch (error) {
       console.error('Erro ao adicionar o jogo:', error);
     }
@@ -26,7 +25,6 @@ export default class JogoViewModel {
   async editarJogo(index, novoNome) {
     try {
       await this.model.editarJogo(index, novoNome);
-      console.log(`Jogo editado com sucesso para: ${novoNome}`);
     } catch (error) {
       console.error('Erro ao editar o jogo:', error);
     }
@@ -35,7 +33,7 @@ export default class JogoViewModel {
   async deletarJogo(index) {
     try {
       await this.model.deletarJogo(index);
-      console.log(`Jogo deletado com sucesso.`);
+      
     } catch (error) {
       console.error('Erro ao deletar o jogo:', error);
     }

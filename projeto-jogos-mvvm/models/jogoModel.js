@@ -9,11 +9,14 @@ class JogoModel {
       return this.jogos;
     }
 
-    adicionarJogo(nome, imagem) {
+    adicionarJogo(nome, descricao, produtora, ano, idadeMinima) {
 
       const novoJogo = {
         nome: nome,
-        imagem: imagem || 'https://via.placeholder.com/150'
+        descricao: descricao,
+        produtora: produtora,
+        ano: ano,
+        idadeMinima: idadeMinima,
       };
 
       this.jogos.push(novoJogo);

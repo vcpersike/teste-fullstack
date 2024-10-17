@@ -1,4 +1,3 @@
-// src/domain/entities/Jogo.ts
 export class Jogo {
     constructor(
       public id: string,

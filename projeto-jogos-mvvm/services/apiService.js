@@ -6,8 +6,7 @@ export async function listarJogos() {
     if (!response.ok) {
       throw new Error('Erro ao obter jogos');
     }
-    console.log('Listando jogos...', response);
-    return await response.json(); // Retorna a lista de jogos como JSON
+    return await response.json();
   } catch (error) {
     console.error('Erro ao listar os jogos:', error);
     throw error;
@@ -22,20 +21,18 @@ export async function obterJogoPorId(id) {
   return await response.json();
 }
 
-export async function criarJogo(jogo, imagem) {
-  const formData = new FormData();
-  formData.append('nome', jogo.nome);
-  formData.append('descricao', jogo.descricao);
-  formData.append('produtora', jogo.produtora);
-  formData.append('ano', jogo.ano);
-  formData.append('idadeMinima', jogo.idadeMinima);
-
+export async function criarJogo(jogo) {
   const response = await fetch(API_URL, {
     method: 'POST',
-    body: formData,
+    headers: {
+      'Content-Type': 'application/json', // Confirma que o body é JSON
+    },
+    body: JSON.stringify(jogo), // Envia os dados do jogo como JSON
   });
 
   if (!response.ok) {
+    const errorData = await response.json(); // Tenta capturar o erro retornado pelo servidor
+    console.error('Erro do servidor:', errorData);
     throw new Error('Erro ao criar o jogo');
   }
   return await response.json();

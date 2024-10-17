@@ -8,6 +8,10 @@ export function criarCard(jogo) {
     <div class="card">
       <div class="card-body text-center">
         <h5 class="card-title">${jogo.nome}</h5>
+        <p class="card-text"><strong>Descrição:</strong> ${jogo.descricao}</p>
+        <p class="card-text"><strong>Produtora:</strong> ${jogo.produtora}</p>
+        <p class="card-text"><strong>Ano:</strong> ${jogo.ano}</p>
+        <p class="card-text"><strong>Idade Mínima:</strong> ${jogo.idadeMinima} anos</p>
       </div>
     </div>
   `;

@@ -64,6 +64,15 @@ export function adicionarEventoAdicionarJogo() {
   });
 };
 
+export function renderizarJogos(jogos, listaElement) {
+  listaElement.innerHTML = '';
+
+  jogos.forEach((jogo) => {
+    const card = criarCard(jogo);
+    listaElement.appendChild(card);
+  });
+}
+
 window.editarJogo = (index) => {
   const novoNome = prompt('Digite o novo nome do jogo:');
   if (novoNome) {
