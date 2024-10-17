@@ -55,10 +55,14 @@ header nav a:hover {
 
 .card {
   width: 18rem;
+  border-radius: 1.5rem;
   margin-bottom: 20px;
 }
 
-.card img {
-  height: 200px;
-  object-fit: cover;
+.card p {
+  margin-bottom: 0;
+  color: #007bff;
+  font-size: small;
+  text-align: start;
 }
+

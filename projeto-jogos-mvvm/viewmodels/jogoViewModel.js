@@ -1,50 +1,52 @@
+import { listarJogos, criarJogo, excluirJogo, editarJogo } from '../services/apiService.js';
 import JogoModel from '../models/jogoModel.js';
 
 export default class JogoViewModel {
   constructor() {
-    this.model = new JogoModel();
+    this.jogos = [];
   }
 
-  async obterJogos() {
+  async carregarJogos() {
     try {
-      return await this.model.getJogos();
+      const dadosJogos = await listarJogos();
+      this.jogos = dadosJogos;
+      return this.jogos;
     } catch (error) {
-      console.error('Erro ao obter jogos:', error);
-      return [];
+      console.error('Erro ao carregar jogos:', error);
+      throw error;
     }
   }
 
-  async adicionarJogo(jogo) {
+  async adicionarJogo(jogoData) {
     try {
-      await this.model.adicionarJogo(jogo);
+      const novoJogo = await criarJogo(jogoData);
+      this.jogos.push(new JogoModel(novoJogo));
     } catch (error) {
-      console.error('Erro ao adicionar o jogo:', error);
+      console.error('Erro ao adicionar jogo:', error);
+      throw error;
     }
   }
 
-  async editarJogo(index, novoNome) {
+  async removerJogo(id) {
     try {
-      await this.model.editarJogo(index, novoNome);
+      await excluirJogo(id);
+      this.jogos = this.jogos.filter(jogo => jogo.id !== id);
     } catch (error) {
-      console.error('Erro ao editar o jogo:', error);
+      console.error('Erro ao remover jogo:', error);
+      throw error;
     }
   }
 
-  async deletarJogo(index) {
+  async editarJogo(id, jogoData) {
     try {
-      await this.model.deletarJogo(index);
-      
+      await editarJogo(id, jogoData);
+      const index = this.jogos.findIndex(jogo => jogo.id === id);
+      if (index !== -1) {
+        this.jogos[index] = new JogoModel({ id, ...jogoData });
+      }
     } catch (error) {
-      console.error('Erro ao deletar o jogo:', error);
-    }
-  }
-
-  async obterLogs() {
-    try {
-      return await this.model.getLogs();
-    } catch (error) {
-      console.error('Erro ao obter logs:', error);
-      return [];
+      console.error('Erro ao editar jogo:', error);
+      throw error;
     }
   }
 }

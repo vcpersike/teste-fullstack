@@ -1,13 +1,16 @@
-import { carregarJogos } from '../utils/carregarJogos.js';
+import { renderizarTabela } from '../views/jogoView.js'; 
 import { criarJogo } from '../services/apiService.js';
-import { criarTabelaJogos } from '../components/tabelaJogo.js';
+import JogoViewModel from '../viewmodels/jogoViewModel.js'; 
 
 const listaElement = document.getElementById('gerenciar-lista');
-const formJogo = $('#form-jogo');
+const viewModel = new JogoViewModel(); 
+const formJogo = $('#form-jogo'); 
+
 function inicializarValidacao() {
   const hoje = new Date();
-  const minAno = new Date(hoje.getFullYear() - 70, hoje.getMonth(), hoje.getDate()); 
+  const minAno = new Date(hoje.getFullYear() - 70, hoje.getMonth(), hoje.getDate());
   const maxAno = new Date(hoje.getFullYear() + 3, hoje.getMonth(), hoje.getDate());
+
   formJogo.validate({
     rules: {
       nome: { required: true, minlength: 3 },
@@ -16,9 +19,10 @@ function inicializarValidacao() {
       ano: {
         required: true,
         dateISO: true,
-        min: minAno.toISOString().split('T')[0], 
-        max: maxAno.toISOString().split('T')[0], 
-      },      idadeMinima: { required: true, number: true, min: 12 },
+        min: minAno.toISOString().split('T')[0],
+        max: maxAno.toISOString().split('T')[0],
+      },
+      idadeMinima: { required: true, number: true, min: 12 },
     },
     messages: {
       nome: { required: 'O nome é obrigatório', minlength: 'Mínimo 3 caracteres' },
@@ -41,14 +45,15 @@ function inicializarValidacao() {
           ano: $('#ano-jogo').val(),
           idadeMinima: parseInt($('#idade-minima-jogo').val(), 10),
         };
-        await criarJogo(novoJogo);
-        await carregarJogos(listaElement);
-        formJogo[0].reset();
+
+        await criarJogo(novoJogo); 
+        await viewModel.carregarJogos(); 
+        formJogo[0].reset(); 
       } catch (error) {
         console.error('Erro ao criar o jogo:', error);
         alert(error.message);
       }
-    }
+    },
   });
 }
 
@@ -60,15 +65,12 @@ function onDelete(jogoId) {
   console.log('Excluir:', jogoId);
 }
 
-function renderizarTabela(jogos, element) {
-  const tabela = criarTabelaJogos(jogos, onEdit, onDelete);
-  element.appendChild(tabela);
-}
 
 document.addEventListener('DOMContentLoaded', async () => {
-  inicializarValidacao();
+  inicializarValidacao(); 
+
   try {
-    await carregarJogos(listaElement, renderizarTabela);
+    await renderizarTabela(viewModel, listaElement, onEdit, onDelete); 
   } catch (error) {
     console.error('Erro ao carregar os jogos:', error);
   }

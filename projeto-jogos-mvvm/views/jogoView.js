@@ -1,88 +1,27 @@
-import JogoViewModel from '../viewmodels/jogoViewModel.js';
-import { criarCard, criarCardComBotoes } from '../components/cardJogo.js';
+import { criarCard } from '../components/cardJogo.js';
+import { criarTabelaJogos } from '../components/tabelaJogo.js';
 
-const viewModel = new JogoViewModel();
-
-export function renderizarLista() {
-  const lista = document.getElementById('jogos-lista');
-  if (!lista) {
-    console.error('Elemento com ID "jogos-lista" não encontrado.');
-    return;
+export async function renderizarJogos(viewModel, element) {
+  try {
+    const jogos = await viewModel.carregarJogos();
+    element.innerHTML = '';
+    jogos.forEach((jogo) => {
+      const card = criarCard(jogo);
+      element.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Erro ao renderizar jogos como cards:', error);
   }
-
-  lista.innerHTML = '';
-
-  viewModel.obterJogos().forEach((jogo) => {
-    const card = criarCard(jogo);
-    lista.appendChild(card);
-  });
 }
 
-export function renderizarGerenciamento() {
-  const lista = document.getElementById('gerenciar-lista');
-  if (!lista) {
-    console.error('Elemento com ID "gerenciar-lista" não encontrado.');
-    return;
+export async function renderizarTabela(viewModel, element, onEdit, onDelete) {
+  try {
+    const jogos = await viewModel.carregarJogos();
+    element.innerHTML = '';
+    const tabela = criarTabelaJogos(jogos, onEdit, onDelete);
+    element.appendChild(tabela);
+  } catch (error) {
+    console.error('Erro ao renderizar jogos como tabela:', error);
   }
-
-  lista.innerHTML = '';
-
-  viewModel.obterJogos().forEach((jogo, index) => {
-    const card = criarCardComBotoes(jogo, index);
-    lista.appendChild(card);
-  });
 }
-
-export function renderizarLogs() {
-  const lista = document.getElementById('logs-lista');
-  lista.innerHTML = '';
-  viewModel.obterLogs().forEach((log) => {
-    const li = document.createElement('li');
-    li.className = 'list-group-item';
-    li.textContent = log;
-    lista.appendChild(li);
-  });
-}
-
-export function adicionarEventoAdicionarJogo() {
-  const form = document.getElementById('form-jogo');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const nomeJogo = document.getElementById('nome-jogo').value.trim();
-    const imagemJogo = document.getElementById('imagem-jogo').value.trim();
-
-    if (!nomeJogo || !imagemJogo) {
-      alert('Por favor, preencha todos os campos corretamente.');
-      return;
-    }
-
-    viewModel.adicionarJogo(nomeJogo, imagemJogo);
-    renderizarGerenciamento();
-    form.reset();
-  });
-};
-
-export function renderizarJogos(jogos, listaElement) {
-  listaElement.innerHTML = '';
-
-  jogos.forEach((jogo) => {
-    const card = criarCard(jogo);
-    listaElement.appendChild(card);
-  });
-}
-
-window.editarJogo = (index) => {
-  const novoNome = prompt('Digite o novo nome do jogo:');
-  if (novoNome) {
-    viewModel.editarJogo(index, novoNome);
-    renderizarGerenciamento();
-  }
-};
-
-window.deletarJogo = (index) => {
-  viewModel.deletarJogo(index);
-  renderizarGerenciamento();
-};
 
