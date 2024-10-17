@@ -6,7 +6,6 @@ export function criarCard(jogo) {
 
   card.innerHTML = `
     <div class="card">
-      <img src="${imagemSrc}" class="card-img-top" alt="${jogo.nome}">
       <div class="card-body text-center">
         <h5 class="card-title">${jogo.nome}</h5>
       </div>

@@ -1,29 +1,52 @@
 import JogoModel from '../models/jogoModel.js';
 
-class JogoViewModel {
+export default class JogoViewModel {
   constructor() {
     this.model = new JogoModel();
   }
 
-  obterJogos() {
-    return this.model.getJogos();
+  async obterJogos() {
+    try {
+      return await this.model.getJogos();
+    } catch (error) {
+      console.error('Erro ao obter jogos:', error);
+      return [];
+    }
   }
 
-  adicionarJogo(nome, imagem) {
-    this.model.adicionarJogo(nome, imagem);
+  async adicionarJogo(jogo, imagem) {
+    try {
+      await this.model.adicionarJogo(jogo, imagem);
+      console.log(`Jogo "${jogo.nome}" adicionado com sucesso.`);
+    } catch (error) {
+      console.error('Erro ao adicionar o jogo:', error);
+    }
   }
 
-  editarJogo(index, novoNome) {
-    this.model.editarJogo(index, novoNome);
+  async editarJogo(index, novoNome) {
+    try {
+      await this.model.editarJogo(index, novoNome);
+      console.log(`Jogo editado com sucesso para: ${novoNome}`);
+    } catch (error) {
+      console.error('Erro ao editar o jogo:', error);
+    }
   }
 
-  deletarJogo(index) {
-    this.model.deletarJogo(index);
+  async deletarJogo(index) {
+    try {
+      await this.model.deletarJogo(index);
+      console.log(`Jogo deletado com sucesso.`);
+    } catch (error) {
+      console.error('Erro ao deletar o jogo:', error);
+    }
   }
 
-  obterLogs() {
-    return this.model.getLogs();
+  async obterLogs() {
+    try {
+      return await this.model.getLogs();
+    } catch (error) {
+      console.error('Erro ao obter logs:', error);
+      return [];
+    }
   }
 }
-
-export default JogoViewModel;

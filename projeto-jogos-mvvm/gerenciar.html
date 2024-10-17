@@ -20,13 +20,12 @@
     <div class="container">
       <h1 class="text-center my-4">Lista de Jogos</h1>
       <form id="form-jogo" class="mt-4">
-        <div class="form-group">
-          <input type="text" id="nome-jogo" class="form-control" placeholder="Nome do Jogo" required>
-        </div>
-        <div class="form-group">
-          <input type="url" id="imagem-jogo" class="form-control" placeholder="URL da Imagem" required>
-        </div>
-        <button type="submit" class="btn btn-success">Salvar Jogo</button>
+        <input type="text" id="nome-jogo" class="form-control" placeholder="Nome do Jogo" required>
+        <input type="text" id="descricao-jogo" class="form-control" placeholder="Descrição" required>
+        <input type="text" id="produtora-jogo" class="form-control" placeholder="Produtora" required>
+        <input type="number" id="ano-jogo" class="form-control" placeholder="Ano" required>
+        <input type="number" id="idade-minima-jogo" class="form-control" placeholder="Idade Mínima" required>
+        <button type="submit" class="btn btn-primary mt-2">Salvar</button>
       </form>
 
       <div id="gerenciar-lista" class="row mt-4"></div>
@@ -34,13 +33,6 @@
   </main>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script type="module">
-    import { renderizarGerenciamento, adicionarEventoAdicionarJogo } from './views/jogoView.js';
-
-    document.addEventListener('DOMContentLoaded', () => {
-      renderizarGerenciamento();
-      adicionarEventoAdicionarJogo();
-    });
-  </script>
+  <script type="module" src="js/gerenciar.js"></script>
 </body>
 </html>
