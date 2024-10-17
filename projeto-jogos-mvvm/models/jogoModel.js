@@ -5,7 +5,6 @@ class JogoModel {
     }
 
     getJogos() {
-
       return this.jogos;
     }
 

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Jogos</title>
+  <title>Gerenciar Jogos</title>
   <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+  
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <script type="module">
     import { renderizarHeader } from './components/header.js';
@@ -18,21 +21,56 @@
 
   <main>
     <div class="container">
-      <h1 class="text-center my-4">Lista de Jogos</h1>
+      <h1 class="text-center my-4">Gerenciar Jogos</h1>
+
       <form id="form-jogo" class="mt-4">
-        <input type="text" id="nome-jogo" class="form-control" placeholder="Nome do Jogo" required>
-        <input type="text" id="descricao-jogo" class="form-control" placeholder="Descrição" required>
-        <input type="text" id="produtora-jogo" class="form-control" placeholder="Produtora" required>
-        <input type="number" id="ano-jogo" class="form-control" placeholder="Ano" required>
-        <input type="number" id="idade-minima-jogo" class="form-control" placeholder="Idade Mínima" required>
+        <div class="form-group">
+          <label for="nome-jogo">Nome do Jogo</label>
+          <input type="text" id="nome-jogo" name="nome" class="form-control" placeholder="Nome do Jogo" required>
+        </div>
+      
+        <!-- Campo de Descrição com largura maior -->
+        <div class="form-group">
+          <label for="descricao-jogo">Descrição</label>
+          <input type="text" id="descricao-jogo" name="descricao" class="form-control" placeholder="Descrição" required>
+        </div>
+      
+        <!-- Linha para os campos Produtora, Ano e Idade Mínima -->
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="produtora-jogo">Produtora</label>
+            <input type="text" id="produtora-jogo" name="produtora" class="form-control" placeholder="Produtora" required>
+          </div>
+      
+          <div class="form-group col-md-4">
+            <label for="ano-jogo">Ano</label>
+            <input type="date" id="ano-jogo" name="ano" class="form-control" required>
+          </div>
+      
+          <div class="form-group col-md-4">
+            <label for="idade-minima-jogo">Idade Mínima</label>
+            <input type="number" id="idade-minima-jogo" name="idadeMinima" class="form-control"
+              placeholder="Idade Mínima" required>
+          </div>
+        </div>
+      
         <button type="submit" class="btn btn-primary mt-2">Salvar</button>
       </form>
 
       <div id="gerenciar-lista" class="row mt-4"></div>
     </div>
   </main>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./vendor/jquery-validation-1.19.5/lib/jquery.js"></script>
+  <script src="./vendor/jquery-validation-1.19.5/dist/jquery.validate.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="js/gerenciar.js"></script>
+  <script type="module" src="./js/gerenciar.js"></script>
+  <script>
+    // Verifique se o jQuery Validation foi carregado corretamente
+    console.log('jQuery:', $);
+    console.log('jQuery Validation:', $.fn.validate);
+  </script>
 </body>
+
 </html>
