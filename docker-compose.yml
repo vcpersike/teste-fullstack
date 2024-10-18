@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/db.sqlite:/app/db.sqlite
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./projeto-jogos-mvvm
+    ports:
+      - "8000:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
