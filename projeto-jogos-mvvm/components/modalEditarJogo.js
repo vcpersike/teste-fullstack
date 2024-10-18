@@ -14,7 +14,7 @@ export function criarModalEdicao(onSave) {
               <input type="text" id="editar-nome" class="form-control mb-2" placeholder="Nome do Jogo" required>
               <input type="text" id="editar-descricao" class="form-control mb-2" placeholder="Descrição" required>
               <input type="text" id="editar-produtora" class="form-control mb-2" placeholder="Produtora" required>
-              <input type="number" id="editar-ano" class="form-control mb-2" placeholder="Ano" required>
+              <input type="date" id="editar-ano" class="form-control mb-2" placeholder="Ano" required>
               <input type="number" id="editar-idade-minima" class="form-control mb-2" placeholder="Idade Mínima" required>
             </div>
             <div class="modal-footer">
@@ -25,11 +25,11 @@ export function criarModalEdicao(onSave) {
         </div>
       </div>
     `;
-  
+
     const div = document.createElement('div');
     div.innerHTML = modalHtml;
     document.body.appendChild(div);
-  
+
     const btnSalvar = div.querySelector('#salvar-edicao');
     btnSalvar.addEventListener('click', () => {
       const jogoEditado = {
@@ -37,11 +37,10 @@ export function criarModalEdicao(onSave) {
         nome: document.getElementById('editar-nome').value,
         descricao: document.getElementById('editar-descricao').value,
         produtora: document.getElementById('editar-produtora').value,
-        ano: parseInt(document.getElementById('editar-ano').value),
+        ano: document.getElementById('editar-ano').value,
         idadeMinima: parseInt(document.getElementById('editar-idade-minima').value),
       };
-  
+
       onSave(jogoEditado);
     });
   }
-  

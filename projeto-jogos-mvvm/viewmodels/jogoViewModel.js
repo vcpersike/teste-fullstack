@@ -17,10 +17,10 @@ export default class JogoViewModel {
     }
   }
 
-  async adicionarJogo(jogoData) {
+  async adicionarJogo(jogo) {
     try {
-      const novoJogo = await criarJogo(jogoData);
-      this.jogos.push(new JogoModel(novoJogo));
+      await criarJogo(jogo);
+      await this.carregarJogos();
     } catch (error) {
       console.error('Erro ao adicionar jogo:', error);
       throw error;
@@ -30,20 +30,28 @@ export default class JogoViewModel {
   async removerJogo(id) {
     try {
       await excluirJogo(id);
-      this.jogos = this.jogos.filter(jogo => jogo.id !== id);
+      await this.carregarJogos();
     } catch (error) {
-      console.error('Erro ao remover jogo:', error);
+      console.error('Erro ao excluir jogo:', error);
       throw error;
     }
   }
 
-  async editarJogo(id, jogoData) {
+  async atualizarJogo(jogoEditado) {
     try {
-      await editarJogo(id, jogoData);
-      const index = this.jogos.findIndex(jogo => jogo.id === id);
-      if (index !== -1) {
-        this.jogos[index] = new JogoModel({ id, ...jogoData });
-      }
+      await editarJogo(jogoEditado.id, jogoEditado);
+      await this.carregarJogos();
+    } catch (error) {
+      console.error('Erro ao editar jogo:', error);
+      throw error;
+    }
+  }
+
+  async editarJogo(jogoEditado) {
+    try {
+      await editarJogo(jogoEditado);
+      this.jogos = await this.carregarJogos();
+      return this.jogos;
     } catch (error) {
       console.error('Erro ao editar jogo:', error);
       throw error;

@@ -1,15 +1,13 @@
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
 
-// Conectar ao banco de dados de teste
 export async function connectTestDB(): Promise<Database> {
   return open({
-    filename: ':memory:', // Banco em memória (apenas para testes)
+    filename: ':memory:',
     driver: sqlite3.Database,
   });
 }
 
-// Criar tabelas no banco de testes
 export async function createTestTables(db: Database) {
   await db.exec(`
     CREATE TABLE jogos (

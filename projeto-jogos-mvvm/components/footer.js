@@ -8,4 +8,3 @@ export function renderizarFooter() {
     `;
     document.body.appendChild(footer);
   }
-  

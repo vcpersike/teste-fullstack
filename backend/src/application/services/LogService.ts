@@ -3,7 +3,7 @@ import { connect } from '../../infrastructure/database/SQLiteDatabase';
 export class LogService {
   async registrarLog(idjogo: string | null, acao: string): Promise<void> {
     const db = await connect();
-    const data = new Date().toISOString(); // Armazena a data no formato ISO
+    const data = new Date().toISOString();
 
     await db.run(
       'INSERT INTO logs (idjogo, acao, data) VALUES (?, ?, ?)',

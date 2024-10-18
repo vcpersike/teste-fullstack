@@ -25,21 +25,21 @@ export async function criarJogo(jogo) {
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json', // Confirma que o body é JSON
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(jogo), // Envia os dados do jogo como JSON
+    body: JSON.stringify(jogo),
   });
 
   if (!response.ok) {
-    const errorData = await response.json(); // Tenta capturar o erro retornado pelo servidor
+    const errorData = await response.json();
     console.error('Erro do servidor:', errorData);
     throw new Error('Erro ao criar o jogo');
   }
   return await response.json();
 }
 
-export async function editarJogo(id, jogo) {
-  const response = await fetch(`${API_URL}/${id}`, {
+export async function editarJogo(jogo) {
+  const response = await fetch(API_URL, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(jogo),

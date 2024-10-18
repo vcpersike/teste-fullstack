@@ -1,4 +1,4 @@
-/* Garante que o body ocupe toda a tela */
+
 html, body {
   height: 100%;
   margin: 0;
@@ -7,7 +7,6 @@ html, body {
   flex-direction: column;
 }
 
-/* Header no topo */
 header {
   background-color: #007bff;
   color: white;
@@ -20,19 +19,16 @@ header .container {
   align-items: center;
 }
 
-/* Footer fixo no final */
 footer {
   flex: 0 0 auto;
 }
 
-/* Conteúdo principal no meio, centralizado verticalmente */
 main {
   flex: 1;
   text-align: center;
   padding: 20px;
 }
 
-/* Estilo adicional para evitar sobreposição com o footer */
 .container {
   width: 100%;
 }
