@@ -7,7 +7,7 @@ export function renderizarHeader() {
         <nav class="d-flex">
           <a href="index.html" class="text-white mx-2">Lista</a>
           <a href="gerenciar.html" class="text-white mx-2">Gerenciar</a>
-          <a href="logs.html" class="text-white mx-2">Logs</a>
+          <a href="logs.html" class="text-white mx-2">Buscar</a>
         </nav>
       </div>
     `;

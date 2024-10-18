@@ -25,4 +25,3 @@ export function criarCard(jogo) {
   return card;
   }
 
-  

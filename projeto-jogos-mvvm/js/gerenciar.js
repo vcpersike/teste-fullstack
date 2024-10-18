@@ -31,7 +31,7 @@ function inicializarValidacao() {
       produtora: 'A produtora é obrigatória',
       ano: {
         required: 'A data de lançamento é obrigatória',
-        dateISO: 'Formato: AAAA-MM-DD',
+        dateISO: 'Formato: DD/MM/AAAA',
         min: `A data deve ser a partir de ${minAno.toISOString().split('T')[0]}`,
         max: `A data não pode ser superior a ${maxAno.toISOString().split('T')[0]}`,
       },
@@ -72,9 +72,9 @@ criarModalEdicao(async (jogoEditado) => {
 
 async function onSave(jogoEditado) {
   try {
-    const jogosAtualizados = await viewModel.editarJogo(jogoEditado); // Edita e obtém a lista atualizada
-    renderizarTabela(jogosAtualizados, listaElement, onEdit, onDelete); // Renderiza a tabela atualizada
-    $('#modal-editar').modal('hide'); // Fecha o modal após salvar
+    const jogosAtualizados = await viewModel.editarJogo(jogoEditado);
+    renderizarTabela(jogosAtualizados, listaElement, onEdit, onDelete);
+    $('#modal-editar').modal('hide');
   } catch (error) {
     console.error('Erro ao salvar o jogo:', error);
     alert('Erro ao salvar o jogo.');
