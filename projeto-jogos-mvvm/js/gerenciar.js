@@ -8,6 +8,10 @@ const viewModel = new JogoViewModel();
 const formJogo = $('#form-jogo');
 
 function inicializarValidacao() {
+  function formatarData(dataISO) {
+    const [ano, mes, dia] = dataISO.split('-');
+    return `${dia}/${mes}/${ano}`;
+  }
   const hoje = new Date();
   const minAno = new Date(hoje.getFullYear() - 70, hoje.getMonth(), hoje.getDate());
   const maxAno = new Date(hoje.getFullYear() + 3, hoje.getMonth(), hoje.getDate());
@@ -39,11 +43,13 @@ function inicializarValidacao() {
     },
     submitHandler: async function () {
       try {
+        const dataInput = $('#ano-jogo').val();
+        const dataFormatada = formatarData(dataInput);
         const novoJogo = {
           nome: $('#nome-jogo').val().trim(),
           descricao: $('#descricao-jogo').val().trim(),
           produtora: $('#produtora-jogo').val().trim(),
-          ano: $('#ano-jogo').val(),
+          ano: dataFormatada,
           idadeMinima: parseInt($('#idade-minima-jogo').val(), 10),
         };
 
