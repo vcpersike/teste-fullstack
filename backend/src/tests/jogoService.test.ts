@@ -18,7 +18,7 @@ describe('JogoService', () => {
       nome: 'Jogo Criado',
       descricao: 'Um jogo criado para teste',
       produtora: 'Produtora Teste',
-      ano: 2023,
+      ano: '20/11/2023',
       idadeMinima: 18,
     });
 
@@ -47,7 +47,7 @@ describe('JogoService', () => {
       nome: 'Jogo Atualizado',
       descricao: 'Descrição atualizada',
       produtora: 'Produtora XYZ',
-      ano: 2023,
+      ano: '20/11/2023',
       idadeMinima: 10,
     });
     expect(sucesso).toBe(true);

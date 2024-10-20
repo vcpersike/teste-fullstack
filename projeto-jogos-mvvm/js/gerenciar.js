@@ -6,12 +6,12 @@ import { criarModalEdicao } from '../components/modalEditarJogo.js';
 const listaElement = document.getElementById('gerenciar-lista');
 const viewModel = new JogoViewModel();
 const formJogo = $('#form-jogo');
-
+function formatarData(dataISO) {
+  const [ano, mes, dia] = dataISO.split('-');
+  return `${dia}/${mes}/${ano}`;
+}
 function inicializarValidacao() {
-  function formatarData(dataISO) {
-    const [ano, mes, dia] = dataISO.split('-');
-    return `${dia}/${mes}/${ano}`;
-  }
+
   const hoje = new Date();
   const minAno = new Date(hoje.getFullYear() - 70, hoje.getMonth(), hoje.getDate());
   const maxAno = new Date(hoje.getFullYear() + 3, hoje.getMonth(), hoje.getDate());
@@ -44,7 +44,7 @@ function inicializarValidacao() {
     submitHandler: async function () {
       try {
         const dataInput = $('#ano-jogo').val();
-        const dataFormatada = formatarData(dataInput);
+        const dataFormatada = dataInput.split('-').reverse().join('/');
         const novoJogo = {
           nome: $('#nome-jogo').val().trim(),
           descricao: $('#descricao-jogo').val().trim(),
@@ -78,8 +78,8 @@ criarModalEdicao(async (jogoEditado) => {
 
 async function onSave(jogoEditado) {
   try {
-    const jogosAtualizados = await viewModel.editarJogo(jogoEditado);
-    renderizarTabela(jogosAtualizados, listaElement, onEdit, onDelete);
+    await viewModel.editarJogo(jogoEditado);
+    renderizarTabela(viewModel, listaElement, onEdit, onDelete);
     $('#modal-editar').modal('hide');
   } catch (error) {
     console.error('Erro ao salvar o jogo:', error);
@@ -88,13 +88,19 @@ async function onSave(jogoEditado) {
 }
 
 function onEdit(jogo) {
+  function formatarDataParaInputDate(data) {
+    const [dia, mes, ano] = data.split('/');
+    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+  }
   document.getElementById('editar-id').value = jogo.id;
   document.getElementById('editar-nome').value = jogo.nome;
   document.getElementById('editar-descricao').value = jogo.descricao;
   document.getElementById('editar-produtora').value = jogo.produtora;
-  document.getElementById('editar-ano').value = jogo.ano;
-  document.getElementById('editar-idade-minima').value = jogo.idadeMinima;
 
+  const dataFormatada = formatarDataParaInputDate(jogo.ano);
+  document.getElementById('editar-ano').value = dataFormatada;
+
+  document.getElementById('editar-idade-minima').value = jogo.idadeMinima;
   $('#modal-editar').modal('show');
 }
 
@@ -107,8 +113,8 @@ async function onDelete(jogoId) {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', async () => {
+
   inicializarValidacao();
   criarModalEdicao(onSave);
 

@@ -13,4 +13,3 @@ export function renderizarHeader() {
     `;
     document.body.prepend(header);
   }
-  

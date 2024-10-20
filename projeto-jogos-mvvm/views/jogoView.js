@@ -15,6 +15,7 @@ export async function renderizarJogos(viewModel, element) {
 }
 
 export async function renderizarTabela(viewModel, element, onEdit, onDelete) {
+
   try {
     const jogos = await viewModel.carregarJogos();
     element.innerHTML = '';

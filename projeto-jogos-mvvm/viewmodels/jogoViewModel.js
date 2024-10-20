@@ -1,5 +1,4 @@
 import { listarJogos, criarJogo, excluirJogo, editarJogo } from '../services/apiService.js';
-import JogoModel from '../models/jogoModel.js';
 
 export default class JogoViewModel {
   constructor() {

@@ -4,7 +4,7 @@ export class Jogo {
       public nome: string,
       public descricao: string,
       public produtora: string,
-      public ano: number,
+      public ano: string,
       public idadeMinima: number
     ) {}
   }
