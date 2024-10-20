@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Jogos</title>
+  <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script type="module">
+    import { renderizarHeader } from './components/header.js';
+    import { renderizarFooter } from './components/footer.js';
+
+    renderizarHeader();
+    renderizarFooter();
+  </script>
+
+  <main>
+    <div class="container">
+      <h1 class="text-center my-4">Lista de Jogos</h1>
+      <div id="jogos-lista" class="row"></div>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./vendor/jquery-validation-1.19.5/lib/jquery.js"></script>
+  <script src="./vendor/jquery-validation-1.19.5/dist/jquery.validate.js"></script>
+  <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./js/index.js"></script>
+</body>
+</html>
