@@ -2,20 +2,43 @@ import { Jogo } from '../../domain/entities/Jogo';
 import { connect } from '../../infrastructure/database/SQLiteDatabase';
 import { gerarId } from '../../utils/IdGenerator';
 import { LogService } from './LogService';
-import { format, parse } from 'date-fns';
+import { format, isValid, parse } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const logService = new LogService();
 
 export class JogoService {
   async listarTodos(): Promise<Jogo[]> {
     const db = await connect();
-    const jogos = await db.all('SELECT * FROM jogos');
+  const jogos = await db.all<Jogo[]>('SELECT * FROM jogos');
 
-    return jogos.map((jogo) => ({
-      ...jogo,
-      ano: format(new Date(jogo.ano), 'dd/MM/yyyy'),
-    }));
-  }
+  return jogos.map((jogo) => {
+    try {
+
+      const data = parse(jogo.ano, 'dd/MM/yyyy', new Date());
+
+      if (!isValid(data)) {
+        const dataISO = parse(jogo.ano, 'yyyy-MM-dd', new Date());
+        if (isValid(dataISO)) {
+          return {
+            ...jogo,
+            ano: format(dataISO, 'dd/MM/yyyy'),
+          };
+        } else {
+          throw new Error(`Data inválida encontrada: ${jogo.ano}`);
+        }
+      }
+
+      return {
+        ...jogo,
+        ano: format(data, 'dd/MM/yyyy'),
+      };
+    } catch (error) {
+      console.error(`Erro ao processar a data: ${(error as Error).message}`);
+      throw error;
+    }
+  });
+}
 
   async obterPorId(id: string): Promise<Jogo | null> {
     const db = await connect();

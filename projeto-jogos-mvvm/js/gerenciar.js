@@ -7,6 +7,11 @@ const listaElement = document.getElementById('gerenciar-lista');
 const viewModel = new JogoViewModel();
 const formJogo = $('#form-jogo');
 
+function formatarDataParaInputDate(data) {
+  const [dia, mes, ano] = data.split('/');
+  return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+}
+
 function inicializarValidacao() {
 
   const hoje = new Date();
@@ -41,7 +46,8 @@ function inicializarValidacao() {
     submitHandler: async function () {
       try {
         const dataInput = $('#ano-jogo').val();
-        const dataFormatada = dataInput.split('-').reverse().join('/');
+        const [ano, mes, dia] = dataInput.split('-');
+        const dataFormatada = `${dia}/${mes}/${ano}`;
         const novoJogo = {
           nome: $('#nome-jogo').val().trim(),
           descricao: $('#descricao-jogo').val().trim(),
@@ -64,8 +70,14 @@ function inicializarValidacao() {
 criarModalEdicao(async (jogoEditado) => {
   try {
     await viewModel.editarJogo(jogoEditado);
+
+    console.log('Jogos editados:', jogoEditado);
+
     const jogosAtualizados = await viewModel.carregarJogos();
-    renderizarTabela(jogosAtualizados, listaElement, onEdit, onDelete);
+    console.log('Jogos atualizados:', jogosAtualizados);
+
+    renderizarTabela(viewModel, listaElement, onEdit, onDelete);
+
     $('#modal-editar').modal('hide');
   } catch (error) {
     console.error('Erro ao salvar o jogo:', error);
@@ -75,8 +87,14 @@ criarModalEdicao(async (jogoEditado) => {
 
 async function onSave(jogoEditado) {
   try {
-    await viewModel.editarJogo(jogoEditado);
-    renderizarTabela(viewModel, listaElement, onEdit, onDelete);
+    const dataISO = formatarDataParaInputDate(jogoEditado.ano);
+    const jogoAtualizado = { ...jogoEditado, ano: dataISO };
+
+    console.log('Enviando jogo para edição:', jogoAtualizado);
+
+    await viewModel.editarJogo(jogoAtualizado);
+    const jogosAtualizados = await viewModel.carregarJogos();
+    renderizarTabela(jogosAtualizados, listaElement, onEdit, onDelete);
     $('#modal-editar').modal('hide');
   } catch (error) {
     console.error('Erro ao salvar o jogo:', error);
@@ -85,10 +103,7 @@ async function onSave(jogoEditado) {
 }
 
 function onEdit(jogo) {
-  function formatarDataParaInputDate(data) {
-    const [dia, mes, ano] = data.split('/');
-    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
-  }
+
   document.getElementById('editar-id').value = jogo.id;
   document.getElementById('editar-nome').value = jogo.nome;
   document.getElementById('editar-descricao').value = jogo.descricao;
