@@ -90,8 +90,6 @@ async function onSave(jogoEditado) {
     const dataISO = formatarDataParaInputDate(jogoEditado.ano);
     const jogoAtualizado = { ...jogoEditado, ano: dataISO };
 
-    console.log('Enviando jogo para edição:', jogoAtualizado);
-
     await viewModel.editarJogo(jogoAtualizado);
     const jogosAtualizados = await viewModel.carregarJogos();
     renderizarTabela(jogosAtualizados, listaElement, onEdit, onDelete);
