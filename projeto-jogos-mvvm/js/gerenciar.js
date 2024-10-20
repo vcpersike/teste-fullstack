@@ -6,10 +6,7 @@ import { criarModalEdicao } from '../components/modalEditarJogo.js';
 const listaElement = document.getElementById('gerenciar-lista');
 const viewModel = new JogoViewModel();
 const formJogo = $('#form-jogo');
-function formatarData(dataISO) {
-  const [ano, mes, dia] = dataISO.split('-');
-  return `${dia}/${mes}/${ano}`;
-}
+
 function inicializarValidacao() {
 
   const hoje = new Date();
